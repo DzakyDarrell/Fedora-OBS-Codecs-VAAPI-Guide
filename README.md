@@ -107,30 +107,37 @@ This means hardware encoding/decoding is available.
 1. Open **OBS Studio** (native version).
 2. Go to **Settings → Output**.
 
-### Encoder Settings
-
-* **Recording Encoder:** `FFmpeg VAAPI (h264_vaapi)`
-* **Streaming Encoder:** `FFmpeg VAAPI (h264_vaapi)`
-* **Rate Control:** CBR (for streaming) / CRF (for recording)
-* **Keyframe Interval:** 2s
+### Encoder Settings (Advanced VAAPI)
+- **Audio Encoder:** `FFmpeg AAC`
+- **Video Encoder:** `FFmpeg VAAPI H.264`
+- **VAAPI Device:** Select your GPU (e.g., Intel HD Graphics, AMD Radeon)
+- **Profile:** `High`
+- **Level:** `4.0`
+- **Rate Control:** `CBR` (streaming) or `CRF` (recording)
+- **Bitrate (streaming 720p):** `2500–4000 Kbps`
+- **Keyframe Interval:** `2s`
+- **Max B-frames:** `0`
 
 ### Recommended Presets
 
-#### 🔹 720p (Recording/Streaming)
+#### 🔹 720p (Streaming)
+- Resolution: 1280x720
+- FPS: 30 or 60
+- Bitrate: 2500–4000 Kbps
+- Profile: High
+- Level: 4.0
 
-* Resolution: 1280x720
-* FPS: 30 or 60 (depending on performance)
-* Bitrate: 2500–4000 Kbps (streaming)
-* CRF: 23 (recording)
-* Preset: Balanced
+#### 🔹 1080p (Streaming)
+- Resolution: 1920x1080
+- FPS: 30/60
+- Bitrate: 4500–6000 Kbps
+- Profile: High
+- Level: 4.2
 
-#### 🔹 1080p (Recording/Streaming)
-
-* Resolution: 1920x1080
-* FPS: 30/60
-* Bitrate: 4500–6000 Kbps (streaming)
-* CRF: 21 (recording)
-* Preset: Balanced/Quality
+#### 🔹 Recording (Better Quality)
+- Rate Control: `CRF`
+- CRF: 21–23
+- Preset: Balanced or Quality
 
 ---
 
