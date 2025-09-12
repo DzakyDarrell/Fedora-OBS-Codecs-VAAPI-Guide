@@ -166,6 +166,6 @@ Add your own screenshots here:
 
 ---
 
-📌 Maintainer: \[Your Name / GitHub Handle]
+📌 Maintainer: \[Dzaky / GitHub Handle]
 
 Contributions welcome! Fork this repo, improve the guide, and submit PRs.
