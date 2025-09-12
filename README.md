@@ -112,7 +112,7 @@ This means hardware encoding/decoding is available.
 - **Video Encoder:** `FFmpeg VAAPI H.264`
 - **VAAPI Device:** Select your GPU (e.g., Intel HD Graphics, AMD Radeon)
 - **Profile:** `High`
-- **Level:** `4.0`
+- **Level:** `Auto`
 - **Rate Control:** `CBR` (streaming) or `CRF` (recording)
 - **Bitrate (streaming 720p):** `2500–4000 Kbps`
 - **Keyframe Interval:** `2s`
@@ -125,14 +125,14 @@ This means hardware encoding/decoding is available.
 - FPS: 30 or 60
 - Bitrate: 2500–4000 Kbps
 - Profile: High
-- Level: 4.0
+- Level: Auto
 
 #### 🔹 1080p (Streaming)
 - Resolution: 1920x1080
 - FPS: 30/60
 - Bitrate: 4500–6000 Kbps
 - Profile: High
-- Level: 4.2
+- Level: Auto
 
 #### 🔹 Recording (Better Quality)
 - Rate Control: `CRF`
