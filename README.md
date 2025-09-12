@@ -1,7 +1,7 @@
 # Fedora-OBS-Codecs-VAAPI-Guide
 Guide to install important codecs to use OBS and other rendering apps on Fedora.
 
-![Fedora Logo](images/Logo_fedoralogo.png)                       ![OBS Logo](images/obs_studio_logo.png)
+![Fedora Logo](images/Logo_fedoralogo.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![OBS Logo](images/obs_studio_logo.png)
 
 A complete guide to enabling **codecs** and **hardware encoding (VAAPI/QuickSync/AMD)** for OBS Studio on **Fedora Linux**. This repo aims to help streamers and content creators configure OBS with the best settings for 720p and 1080p.
 
