@@ -7,7 +7,7 @@ A complete guide to enabling **codecs** and **hardware encoding (VAAPI/QuickSync
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 
 1. [Requirements](#requirements)
 2. [Install RPM Fusion & Codecs](#install-rpm-fusion--codecs)
@@ -24,7 +24,7 @@ A complete guide to enabling **codecs** and **hardware encoding (VAAPI/QuickSync
 
 ---
 
-## ✅ Requirements
+## Requirements
 
 * Fedora Workstation (KDE Plasma, GNOME, etc.)
 * OBS Studio (native, not Flatpak)
@@ -33,7 +33,7 @@ A complete guide to enabling **codecs** and **hardware encoding (VAAPI/QuickSync
 
 ---
 
-## 📦 Install RPM Fusion & Codecs
+## Install RPM Fusion & Codecs
 
 Fedora ships without some codecs. You’ll need **RPM Fusion**:
 
@@ -62,7 +62,7 @@ sudo dnf install mesa-va-drivers mesa-vdpau-drivers
 
 ---
 
-## ⚡ Enable Hardware Acceleration
+## Enable Hardware Acceleration
 
 For Intel/AMD GPUs:
 
@@ -81,7 +81,7 @@ sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda
 
 ---
 
-## 🔍 Verify VAAPI Support
+## Verify VAAPI Support
 
 Run:
 
@@ -100,7 +100,7 @@ This means hardware encoding/decoding is available.
 
 ---
 
-## 🎥 OBS Configuration
+## OBS Configuration
 
 ### General Settings
 
@@ -141,7 +141,7 @@ This means hardware encoding/decoding is available.
 
 ---
 
-## 🖼 Screenshots
+## Screenshots
 
 Add your own screenshots here:
 
@@ -151,7 +151,7 @@ Add your own screenshots here:
 
 ---
 
-## 🛠 Troubleshooting
+## Troubleshooting
 
 * **OBS Flatpak can’t see VAAPI:** Use the native DNF package instead.
 * **No VAAPI in dropdown:** Install missing drivers (`mesa-va-drivers`, `libva-intel-driver`).
@@ -160,7 +160,7 @@ Add your own screenshots here:
 
 ---
 
-## 💡 Extra Tips
+## Extra Tips
 
 * Use **BTRFS with Zstd** (default in Fedora) for efficient disk usage when recording.
 * Store recordings on SSD if possible.
