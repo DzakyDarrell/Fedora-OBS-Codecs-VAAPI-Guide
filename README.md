@@ -14,7 +14,6 @@ A complete guide to enabling **codecs** and **hardware encoding (VAAPI/QuickSync
 3. [Enable Hardware Acceleration](#enable-hardware-acceleration)
 4. [Verify VAAPI Support](#verify-vaapi-support)
 5. [OBS Configuration](#obs-configuration)
-
    * [General Settings](#general-settings)
    * [Encoder Settings](#encoder-settings)
    * [Recommended Presets](#recommended-presets)
@@ -35,50 +34,41 @@ A complete guide to enabling **codecs** and **hardware encoding (VAAPI/QuickSync
 
 ## Install RPM Fusion & Codecs
 
-Fedora ships without some codecs. You’ll need **RPM Fusion**:
+1. Fedora ships without some codecs. You’ll need **RPM Fusion**:
 
 ```bash
-# Enable RPM Fusion repos
-sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-                 https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-# Update and install multimedia codecs
-sudo dnf groupupdate multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
-sudo dnf groupupdate sound-and-video
-
-# Extra ffmpeg tools
-sudo dnf install ffmpeg ffmpeg-libs
+sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 ```
-
-If you’re using Intel/AMD, install VAAPI drivers:
-
+2. Install the **GStreamer Codecs**:
 ```bash
-# Intel VAAPI
-sudo dnf install libva-intel-driver libva-utils
-
-# AMD VAAPI
-sudo dnf install mesa-va-drivers mesa-vdpau-drivers
+sudo dnf install gstreamer1-devel gstreamer1-plugins-base-tools gstreamer1-doc gstreamer1-plugins-base-devel gstreamer1-plugins-good gstreamer1-plugins-good-extras gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-free-devel gstreamer1-plugins-bad-free-extras
 ```
 
+3. Install the **FFMPEG Codecs**:
+```bash
+sudo dnf install ffmpeg --allowerasing
+```
+
+4. Instal the **Libva Codecs**:
+```bash
+sudo dnf install libavcodec-freeworld libva-utils
+```
 ---
 
 ## Enable Hardware Acceleration
 
-For Intel/AMD GPUs:
+If you’re using Intel install VAAPI drivers for hardware acceleration:
 
 ```bash
-sudo dnf install libva-utils
-vainfo
+sudo dnf install intel-media-driver
 ```
-
-If `vainfo` shows supported codecs (H.264, HEVC), VAAPI is working.
-
-For NVIDIA (optional):
-
+If you're using AMD, VAAPI is already installed on kernel but you need to swap to use it:
 ```bash
-sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda
+sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld --allowerasing
 ```
-
+```bash
+sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld --allowerasing
+```
 ---
 
 ## Verify VAAPI Support
@@ -86,17 +76,28 @@ sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda
 Run:
 
 ```bash
-vainfo | grep -i h264
+vainfo | grep "H264"
 ```
 
 You should see lines like:
 
 ```
-VAProfileH264High : VAEntrypointVLD
-VAProfileH264High : VAEntrypointEncSlice
+#example result
+      VAProfileH264Main               : VAEntrypointVLD
+      VAProfileH264Main               : VAEntrypointEncSlice
+      VAProfileH264Main               : VAEntrypointFEI
+      VAProfileH264Main               : VAEntrypointEncSliceLP
+      VAProfileH264High               : VAEntrypointVLD
+      VAProfileH264High               : VAEntrypointEncSlice
+      VAProfileH264High               : VAEntrypointFEI
+      VAProfileH264High               : VAEntrypointEncSliceLP
+      VAProfileH264ConstrainedBaseline: VAEntrypointVLD
+      VAProfileH264ConstrainedBaseline: VAEntrypointEncSlice
+      VAProfileH264ConstrainedBaseline: VAEntrypointFEI
+      VAProfileH264ConstrainedBaseline: VAEntrypointEncSliceLP
 ```
 
-This means hardware encoding/decoding is available.
+This means hardware encoding/decoding is available and instaled properly.
 
 ---
 
@@ -173,6 +174,6 @@ Add your own screenshots here:
 
 ---
 
-📌 Maintainer: \[Dzaky / GitHub Handle]
+📌 Maintainer: \[Dzaky]
 
 Contributions welcome! Fork this repo, improve the guide, and submit PRs.
