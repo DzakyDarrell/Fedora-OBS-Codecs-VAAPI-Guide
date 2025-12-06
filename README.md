@@ -142,16 +142,6 @@ This means hardware encoding/decoding is available and instaled properly.
 
 ---
 
-## Screenshots
-
-Add your own screenshots here:
-
-* ![OBS Output Settings](images/obs-output-settings.png)
-* ![OBS Encoder Dropdown](images/obs-encoder.png)
-* ![VAAPI Working](images/vainfo.png)
-
----
-
 ## Troubleshooting
 
 * **OBS Flatpak can’t see VAAPI:** Use the native DNF package instead.
