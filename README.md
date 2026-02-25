@@ -10,7 +10,7 @@ A complete guide to enabling **codecs** and **hardware encoding (VAAPI/QuickSync
 ## Table of Contents
 
 1. [Requirements](#requirements)
-2. [Install RPM Fusion & Codecs](#install-rpm-fusion--codecs)
+2. [Install RPM Fusion & Needed Codecs](#install-rpm-fusion--codecs)
 3. [Enable Hardware Acceleration](#enable-hardware-acceleration)
 4. [Verify VAAPI Support](#verify-vaapi-support)
 5. [OBS Configuration](#obs-configuration)
@@ -39,9 +39,9 @@ A complete guide to enabling **codecs** and **hardware encoding (VAAPI/QuickSync
 ```bash
 sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 ```
-2. Install the **GStreamer Codecs**:
+2. Enable Fedora **Cisco OpenH264**:
 ```bash
-sudo dnf install gstreamer1-devel gstreamer1-plugins-base-tools gstreamer1-doc gstreamer1-plugins-base-devel gstreamer1-plugins-good gstreamer1-plugins-good-extras gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-free-devel gstreamer1-plugins-bad-free-extras
+sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
 ```
 
 3. Install the **FFMPEG Codecs**:
@@ -53,14 +53,19 @@ sudo dnf install ffmpeg --allowerasing
 ```bash
 sudo dnf install libavcodec-freeworld libva-utils
 ```
+
+5. Install the complete **GStreamer Codecs** (Optional):
+```bash
+sudo dnf install gstreamer1-devel gstreamer1-plugins-base-tools gstreamer1-doc gstreamer1-plugins-base-devel gstreamer1-plugins-good gstreamer1-plugins-good-extras gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-free-devel gstreamer1-plugins-bad-free-extras
+```
 ---
 
 ## Enable Hardware Acceleration
 
-If you’re using Intel install VAAPI drivers for hardware acceleration:
+For Intel user install needed drivers for iGPU hardware acceleration:
 
 ```bash
-sudo dnf install intel-media-driver
+sudo dnf -y install libva-intel-driver intel-media-driver intel-mediasdk-devel
 ```
 If you're using AMD, VAAPI is already installed on kernel but you need to swap to use it:
 ```bash
@@ -101,44 +106,45 @@ This means hardware encoding/decoding is available and instaled properly.
 
 ---
 
-## OBS Configuration
+## OBS Configuration For 720p Recording
 
 ### General Settings
 
-1. Open **OBS Studio** (native version).
+1. Open **OBS Studio**.
 2. Go to **Settings → Output**.
 
 ### Encoder Settings (Advanced VAAPI)
 - **Audio Encoder:** `FFmpeg AAC`
-- **Video Encoder:** `FFmpeg VAAPI H.264`
+- **Video Encoder:** `FFmpeg VAAPI H.264` you can also use Intel `QuickSync H264`
 - **VAAPI Device:** Select your GPU (e.g., Intel HD Graphics, AMD Radeon)
 - **Profile:** `High`
-- **Level:** `Auto`
-- **Rate Control:** `CBR` (streaming) or `CRF` (recording)
-- **Bitrate (streaming 720p):** `2500–4000 Kbps`
+- **Level:** `3.1`
+- **Rate Control:** `CBR` (streaming) or `CQP` (recording)
+- **Bitrate (streaming 720p):** `3000–4000 Kbps`
 - **Keyframe Interval:** `2s`
-- **Max B-frames:** `0`
+- **Max B-frames:** `2`
 
 ### Recommended Presets
 
 #### 🔹 720p (Streaming)
 - Resolution: 1280x720
 - FPS: 30 or 60
-- Bitrate: 2500–4000 Kbps
+- Bitrate: 3000–4000 Kbps
 - Profile: High
-- Level: Auto
+- Level: 3.1
 
 #### 🔹 1080p (Streaming)
 - Resolution: 1920x1080
-- FPS: 30/60
+- FPS: 30 or 60
 - Bitrate: 4500–6000 Kbps
 - Profile: High
-- Level: Auto
+- Level: 4.0
 
 #### 🔹 Recording (Better Quality)
-- Rate Control: `CRF`
-- CRF: 21–23
-- Preset: Balanced or Quality
+- Rate Control: `CQP`
+- QP: 21–23
+- Profile: High
+- Level: 3.1
 
 ---
 
@@ -147,20 +153,7 @@ This means hardware encoding/decoding is available and instaled properly.
 * **OBS Flatpak can’t see VAAPI:** Use the native DNF package instead.
 * **No VAAPI in dropdown:** Install missing drivers (`mesa-va-drivers`, `libva-intel-driver`).
 * **Streaming lags:** Lower bitrate or FPS.
-* **Recording stutters:** Use `CRF` instead of `CBR`.
-
----
-
-## Extra Tips
-
-* Use **BTRFS with Zstd** (default in Fedora) for efficient disk usage when recording.
-* Store recordings on SSD if possible.
-* For editing, convert recordings to `mkv` → `mp4` with:
-
-  ```bash
-  ffmpeg -i input.mkv -codec copy output.mp4
-  ```
-* Share your OBS profile with friends by exporting `~/.config/obs-studio`.
+* **Recording stutters:** Use `CQP` instead of `CBR`.
 
 ---
 
